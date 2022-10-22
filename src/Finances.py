@@ -335,34 +335,34 @@ def Summary_Data_Mode(connection, cursor):
         command = input('summary>')
         
 
-
-try:
-    with mysql.connector.connect(
-        host="localhost",
-        user=input("Enter username: "),
-        password=getpass("Enter password: "),
-        database = DATABASE_NAME
-    ) as connection:
-        with connection.cursor() as cursor:
-            command = input(">")
-            while command != 'quit':
-                if command == 'help':
-                    Help_Menu()
-                elif command == 'insert_expenses':
-                    Insert_Expenses_Mode(connection, cursor)
-                elif command == 'view_expenses':
-                    View_Expenses_Mode(connection, cursor)
-                elif command == 'insert_income':
-                    Insert_Income_Mode(connection, cursor)
-                elif command == 'view_income':
-                    View_Income_Mode(connection, cursor)
-                elif command == 'summary':
-                    Summary_Data_Mode(connection, cursor)
-                else:
-                    print("Command not found")
-                
+if __name__ == '__main__':
+    try:
+        with mysql.connector.connect(
+            host="localhost",
+            user=input("Enter username: "),
+            password=getpass("Enter password: "),
+            database = DATABASE_NAME
+        ) as connection:
+            with connection.cursor() as cursor:
                 command = input(">")
+                while command != 'quit':
+                    if command == 'help':
+                        Help_Menu()
+                    elif command == 'insert_expenses':
+                        Insert_Expenses_Mode(connection, cursor)
+                    elif command == 'view_expenses':
+                        View_Expenses_Mode(connection, cursor)
+                    elif command == 'insert_income':
+                        Insert_Income_Mode(connection, cursor)
+                    elif command == 'view_income':
+                        View_Income_Mode(connection, cursor)
+                    elif command == 'summary':
+                        Summary_Data_Mode(connection, cursor)
+                    else:
+                        print("Command not found")
+                    
+                    command = input(">")
 
 
-except mysql.connector.Error as e:
-    print(e)
+    except mysql.connector.Error as e:
+        print(e)
