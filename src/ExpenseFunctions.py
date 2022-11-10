@@ -1,5 +1,9 @@
+#External libraries
+import mysql.connector
+
 #Internal files
 import CLIFunctions as CLI
+import CreditFunctions as Credit
 
 '''Get_Expense_Data_CL
 Description: Get expense data from command line.
@@ -56,9 +60,16 @@ def Insert_Expense(connection, cursor):
         try:
             cursor.execute(sql_query)
             connection.commit()
+
+            #If payment type is credit, ask for credit installments data
+            if Expense_Data['payment_type'].lower() == "'credit'":
+                confirm_installments, card, number_installments = Credit.Get_Installment_Data()
+
+                if confirm_installments == 'Y':
+                    Credit.Create_Credit_Installments(connection, cursor, cursor.lastrowid, int(number_installments), Credit.Get_Card_Info(connection, cursor, card))
         except mysql.connector.Error as e:
             print("\nError in expense insertion.") #Update this for red in the future.
-            print("MySQL Error: ", e)  
+            print("MySQL Error: ", e)
 
 
 def Insert_Expenses_Mode(connection, cursor):

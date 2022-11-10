@@ -12,16 +12,6 @@ CREATE TABLE IF NOT EXISTS Income
 		PRIMARY KEY (income_id)
 	);
 
--- Create Credit table
-CREATE TABLE IF NOT EXISTS Credit
-	(
-		due_date DATE NOT NULL,
-		card VARCHAR(20) NOT NULL,
-		payment_date DATE,
-		observation VARCHAR(200),
-		PRIMARY KEY (card, due_date) 
-	);
-
 -- Create Expenses table
 CREATE TABLE IF NOT EXISTS Expenses
 	(
@@ -54,10 +44,9 @@ CREATE TABLE IF NOT EXISTS Credit_Installments
 		card VARCHAR(20) NOT NULL,
 		expense_id INT NOT NULL,
 		value DECIMAL(8,2) NOT NULL,
-		number_installments INT NOT NULL,
+		number_installment INT NOT NULL,
 		total_installments INT NOT NULL,
 		PRIMARY KEY (card, due_date, expense_id),
-		FOREIGN KEY (card, due_date) REFERENCES Credit(card, due_date),
 		FOREIGN KEY (expense_id) REFERENCES Expenses(expense_id)
 	);
 	
@@ -86,3 +75,11 @@ CREATE TABLE IF NOT EXISTS Outgoing
 		FOREIGN KEY (expense_id) REFERENCES Expenses(expense_id)
 	);
         
+-- Credit cards table
+CREATE TABLE IF NOT EXISTS Credit_Cards
+	(
+		card VARCHAR(20) NOT NULL,
+        	closing_day VARCHAR(2) NOT NULL,
+        	due_day VARCHAR(2) NOT NULL,
+        	PRIMARY KEY (card)
+	);

@@ -1,3 +1,6 @@
+#External libraries
+import mysql.connector
+
 #Internal files
 import CLIFunctions as CLI
 
